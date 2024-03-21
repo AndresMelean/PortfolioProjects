@@ -1,5 +1,5 @@
 SELECT *
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY location, date
 
@@ -10,27 +10,27 @@ ORDER BY location, date
 
 
 SELECT location, date, total_cases, new_cases, total_deaths, population
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY location, date
 
 
 -- Total Cases vs Total Deaths
 SELECT location, date, total_cases, total_deaths, (cast(total_deaths as float)/cast(total_cases as float))*100 AS DeathPercentage
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY location, date
 
 -- Total Cases vs Population
 SELECT location, date, total_cases, population, (total_cases/population)*100 AS PercentPopulationInfected
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY location, date
 
 
 -- Countries with Highest Infection Rate Compared to Population
 SELECT location, population, MAX(total_cases) AS HighestInfectionCount, MAX((total_cases/population))*100 AS PercentPopulationInfected
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 GROUP BY location, population
 ORDER BY PercentPopulationInfected DESC
@@ -38,7 +38,7 @@ ORDER BY PercentPopulationInfected DESC
 
 -- Countries with Highest Death Count Per Population
 SELECT location, MAX(cast(total_deaths as int)) AS TotalDeathCount
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 GROUP BY location
 ORDER BY TotalDeathCount DESC
@@ -46,7 +46,7 @@ ORDER BY TotalDeathCount DESC
 
 -- Continents with Highest Death Count
 SELECT continent, MAX(cast(total_deaths as int)) AS TotalDeathCount
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 GROUP BY continent
 ORDER BY TotalDeathCount DESC
@@ -54,7 +54,7 @@ ORDER BY TotalDeathCount DESC
 
 -- Global Numbers
 SELECT SUM(new_cases) as total_cases, SUM(cast(new_deaths as int)) as total_deaths, SUM(cast(new_deaths as int))/Sum(new_cases)*100 AS DeathPercentage
-FROM PorfolioProject.dbo.CovidDeaths
+FROM PortfolioProject.dbo.CovidDeaths
 WHERE continent IS NOT NULL
 ORDER BY 1,2
 
@@ -64,8 +64,8 @@ SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (PARTITION BY dea.location ORDER BY dea.location, 
   dea.date) AS RollingPeopleVaccinated
 --, (RollingPepleVaccinated/population)*100
-FROM PorfolioProject.dbo.CovidDeaths dea
-JOIN PorfolioProject.dbo.CovidVaccinations vac
+FROM PortfolioProject.dbo.CovidDeaths dea
+JOIN PortfolioProject.dbo.CovidVaccinations vac
 	ON dea.location = vac.location
 	AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL
@@ -80,8 +80,8 @@ SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (PARTITION BY dea.location ORDER BY dea.location, 
   dea.date) AS RollingPeopleVaccinated
 --, (RollingPepleVaccinated/population)*100
-FROM PorfolioProject.dbo.CovidDeaths dea
-JOIN PorfolioProject.dbo.CovidVaccinations vac
+FROM PortfolioProject.dbo.CovidDeaths dea
+JOIN PortfolioProject.dbo.CovidVaccinations vac
 	ON dea.location = vac.location
 	AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL
@@ -108,8 +108,8 @@ SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (PARTITION BY dea.location ORDER BY dea.location, 
   dea.date) AS RollingPeopleVaccinated
 --, (RollingPepleVaccinated/population)*100
-FROM PorfolioProject.dbo.CovidDeaths dea
-JOIN PorfolioProject.dbo.CovidVaccinations vac
+FROM PortfolioProject.dbo.CovidDeaths dea
+JOIN PortfolioProject.dbo.CovidVaccinations vac
 	ON dea.location = vac.location
 	AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL
@@ -124,8 +124,8 @@ SELECT dea.continent, dea.location, dea.date, dea.population, vac.new_vaccinatio
 , SUM(cast(vac.new_vaccinations as bigint)) OVER (PARTITION BY dea.location ORDER BY dea.location, 
   dea.date) AS RollingPeopleVaccinated
 --, (RollingPepleVaccinated/population)*100
-FROM PorfolioProject.dbo.CovidDeaths dea
-JOIN PorfolioProject.dbo.CovidVaccinations vac
+FROM PortfolioProject.dbo.CovidDeaths dea
+JOIN PortfolioProject.dbo.CovidVaccinations vac
 	ON dea.location = vac.location
 	AND dea.date = vac.date
 WHERE dea.continent IS NOT NULL
